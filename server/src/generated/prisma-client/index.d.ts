@@ -10,6 +10,8 @@ type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
+  answer: (where?: AnswerWhereInput) => Promise<boolean>;
+  attendee: (where?: AttendeeWhereInput) => Promise<boolean>;
   class: (where?: ClassWhereInput) => Promise<boolean>;
   field: (where?: FieldWhereInput) => Promise<boolean>;
   post: (where?: PostWhereInput) => Promise<boolean>;
@@ -35,6 +37,44 @@ export interface Prisma {
    * Queries
    */
 
+  answer: (where: AnswerWhereUniqueInput) => AnswerPromise;
+  answers: (args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Answer>;
+  answersConnection: (args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AnswerConnectionPromise;
+  attendee: (where: AttendeeWhereUniqueInput) => AttendeePromise;
+  attendees: (args?: {
+    where?: AttendeeWhereInput;
+    orderBy?: AttendeeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Attendee>;
+  attendeesConnection: (args?: {
+    where?: AttendeeWhereInput;
+    orderBy?: AttendeeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AttendeeConnectionPromise;
   class: (where: ClassWhereUniqueInput) => ClassPromise;
   classes: (args?: {
     where?: ClassWhereInput;
@@ -117,6 +157,38 @@ export interface Prisma {
    * Mutations
    */
 
+  createAnswer: (data: AnswerCreateInput) => AnswerPromise;
+  updateAnswer: (args: {
+    data: AnswerUpdateInput;
+    where: AnswerWhereUniqueInput;
+  }) => AnswerPromise;
+  updateManyAnswers: (args: {
+    data: AnswerUpdateManyMutationInput;
+    where?: AnswerWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAnswer: (args: {
+    where: AnswerWhereUniqueInput;
+    create: AnswerCreateInput;
+    update: AnswerUpdateInput;
+  }) => AnswerPromise;
+  deleteAnswer: (where: AnswerWhereUniqueInput) => AnswerPromise;
+  deleteManyAnswers: (where?: AnswerWhereInput) => BatchPayloadPromise;
+  createAttendee: (data: AttendeeCreateInput) => AttendeePromise;
+  updateAttendee: (args: {
+    data: AttendeeUpdateInput;
+    where: AttendeeWhereUniqueInput;
+  }) => AttendeePromise;
+  updateManyAttendees: (args: {
+    data: AttendeeUpdateManyMutationInput;
+    where?: AttendeeWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAttendee: (args: {
+    where: AttendeeWhereUniqueInput;
+    create: AttendeeCreateInput;
+    update: AttendeeUpdateInput;
+  }) => AttendeePromise;
+  deleteAttendee: (where: AttendeeWhereUniqueInput) => AttendeePromise;
+  deleteManyAttendees: (where?: AttendeeWhereInput) => BatchPayloadPromise;
   createClass: (data: ClassCreateInput) => ClassPromise;
   updateClass: (args: {
     data: ClassUpdateInput;
@@ -190,6 +262,12 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  answer: (
+    where?: AnswerSubscriptionWhereInput
+  ) => AnswerSubscriptionPayloadSubscription;
+  attendee: (
+    where?: AttendeeSubscriptionWhereInput
+  ) => AttendeeSubscriptionPayloadSubscription;
   class: (
     where?: ClassSubscriptionWhereInput
   ) => ClassSubscriptionPayloadSubscription;
@@ -212,6 +290,16 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type AnswerOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "value_ASC"
+  | "value_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type PostOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -221,6 +309,8 @@ export type PostOrderByInput =
   | "updatedAt_DESC"
   | "published_ASC"
   | "published_DESC"
+  | "anonymous_ASC"
+  | "anonymous_DESC"
   | "title_ASC"
   | "title_DESC"
   | "content_ASC"
@@ -252,6 +342,16 @@ export type ClassOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
+export type AttendeeOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -268,9 +368,131 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type ClassWhereUniqueInput = AtLeastOne<{
+export type AnswerWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
+
+export interface AnswerWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  value?: String;
+  value_not?: String;
+  value_in?: String[] | String;
+  value_not_in?: String[] | String;
+  value_lt?: String;
+  value_lte?: String;
+  value_gt?: String;
+  value_gte?: String;
+  value_contains?: String;
+  value_not_contains?: String;
+  value_starts_with?: String;
+  value_not_starts_with?: String;
+  value_ends_with?: String;
+  value_not_ends_with?: String;
+  author?: AttendeeWhereInput;
+  field?: FieldWhereInput;
+  AND?: AnswerWhereInput[] | AnswerWhereInput;
+  OR?: AnswerWhereInput[] | AnswerWhereInput;
+  NOT?: AnswerWhereInput[] | AnswerWhereInput;
+}
+
+export interface AttendeeWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  answers_every?: AnswerWhereInput;
+  answers_some?: AnswerWhereInput;
+  answers_none?: AnswerWhereInput;
+  class?: ClassWhereInput;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  AND?: AttendeeWhereInput[] | AttendeeWhereInput;
+  OR?: AttendeeWhereInput[] | AttendeeWhereInput;
+  NOT?: AttendeeWhereInput[] | AttendeeWhereInput;
+}
+
+export interface ClassWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  post?: PostWhereInput;
+  published?: Boolean;
+  published_not?: Boolean;
+  attendees_every?: AttendeeWhereInput;
+  attendees_some?: AttendeeWhereInput;
+  attendees_none?: AttendeeWhereInput;
+  AND?: ClassWhereInput[] | ClassWhereInput;
+  OR?: ClassWhereInput[] | ClassWhereInput;
+  NOT?: ClassWhereInput[] | ClassWhereInput;
+}
 
 export interface PostWhereInput {
   id?: ID_Input;
@@ -305,6 +527,8 @@ export interface PostWhereInput {
   updatedAt_gte?: DateTimeInput;
   published?: Boolean;
   published_not?: Boolean;
+  anonymous?: Boolean;
+  anonymous_not?: Boolean;
   title?: String;
   title_not?: String;
   title_in?: String[] | String;
@@ -468,47 +692,21 @@ export interface FieldWhereInput {
   type_ends_with?: String;
   type_not_ends_with?: String;
   post?: PostWhereInput;
+  answers_every?: AnswerWhereInput;
+  answers_some?: AnswerWhereInput;
+  answers_none?: AnswerWhereInput;
   AND?: FieldWhereInput[] | FieldWhereInput;
   OR?: FieldWhereInput[] | FieldWhereInput;
   NOT?: FieldWhereInput[] | FieldWhereInput;
 }
 
-export interface ClassWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  post?: PostWhereInput;
-  published?: Boolean;
-  published_not?: Boolean;
-  AND?: ClassWhereInput[] | ClassWhereInput;
-  OR?: ClassWhereInput[] | ClassWhereInput;
-  NOT?: ClassWhereInput[] | ClassWhereInput;
-}
+export type AttendeeWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export type ClassWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
 
 export type FieldWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
@@ -523,7 +721,28 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: String;
 }>;
 
-export interface ClassCreateInput {
+export interface AnswerCreateInput {
+  value: String;
+  author: AttendeeCreateOneWithoutAnswersInput;
+  field?: FieldCreateOneWithoutAnswersInput;
+}
+
+export interface AttendeeCreateOneWithoutAnswersInput {
+  create?: AttendeeCreateWithoutAnswersInput;
+  connect?: AttendeeWhereUniqueInput;
+}
+
+export interface AttendeeCreateWithoutAnswersInput {
+  name?: String;
+  class: ClassCreateOneWithoutAttendeesInput;
+}
+
+export interface ClassCreateOneWithoutAttendeesInput {
+  create?: ClassCreateWithoutAttendeesInput;
+  connect?: ClassWhereUniqueInput;
+}
+
+export interface ClassCreateWithoutAttendeesInput {
   name: String;
   post: PostCreateOneWithoutClassesInput;
   published?: Boolean;
@@ -536,6 +755,7 @@ export interface PostCreateOneWithoutClassesInput {
 
 export interface PostCreateWithoutClassesInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title: String;
   content: String;
   answerType: String;
@@ -562,9 +782,102 @@ export interface FieldCreateManyWithoutPostInput {
 export interface FieldCreateWithoutPostInput {
   label: String;
   type: String;
+  answers?: AnswerCreateManyWithoutFieldInput;
 }
 
-export interface ClassUpdateInput {
+export interface AnswerCreateManyWithoutFieldInput {
+  create?: AnswerCreateWithoutFieldInput[] | AnswerCreateWithoutFieldInput;
+  connect?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+}
+
+export interface AnswerCreateWithoutFieldInput {
+  value: String;
+  author: AttendeeCreateOneWithoutAnswersInput;
+}
+
+export interface FieldCreateOneWithoutAnswersInput {
+  create?: FieldCreateWithoutAnswersInput;
+  connect?: FieldWhereUniqueInput;
+}
+
+export interface FieldCreateWithoutAnswersInput {
+  label: String;
+  type: String;
+  post: PostCreateOneWithoutFieldsInput;
+}
+
+export interface PostCreateOneWithoutFieldsInput {
+  create?: PostCreateWithoutFieldsInput;
+  connect?: PostWhereUniqueInput;
+}
+
+export interface PostCreateWithoutFieldsInput {
+  published?: Boolean;
+  anonymous?: Boolean;
+  title: String;
+  content: String;
+  answerType: String;
+  author: UserCreateOneWithoutPostsInput;
+  classes?: ClassCreateManyWithoutPostInput;
+}
+
+export interface ClassCreateManyWithoutPostInput {
+  create?: ClassCreateWithoutPostInput[] | ClassCreateWithoutPostInput;
+  connect?: ClassWhereUniqueInput[] | ClassWhereUniqueInput;
+}
+
+export interface ClassCreateWithoutPostInput {
+  name: String;
+  published?: Boolean;
+  attendees?: AttendeeCreateManyWithoutClassInput;
+}
+
+export interface AttendeeCreateManyWithoutClassInput {
+  create?: AttendeeCreateWithoutClassInput[] | AttendeeCreateWithoutClassInput;
+  connect?: AttendeeWhereUniqueInput[] | AttendeeWhereUniqueInput;
+}
+
+export interface AttendeeCreateWithoutClassInput {
+  name?: String;
+  answers?: AnswerCreateManyWithoutAuthorInput;
+}
+
+export interface AnswerCreateManyWithoutAuthorInput {
+  create?: AnswerCreateWithoutAuthorInput[] | AnswerCreateWithoutAuthorInput;
+  connect?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+}
+
+export interface AnswerCreateWithoutAuthorInput {
+  value: String;
+  field?: FieldCreateOneWithoutAnswersInput;
+}
+
+export interface AnswerUpdateInput {
+  value?: String;
+  author?: AttendeeUpdateOneRequiredWithoutAnswersInput;
+  field?: FieldUpdateOneWithoutAnswersInput;
+}
+
+export interface AttendeeUpdateOneRequiredWithoutAnswersInput {
+  create?: AttendeeCreateWithoutAnswersInput;
+  update?: AttendeeUpdateWithoutAnswersDataInput;
+  upsert?: AttendeeUpsertWithoutAnswersInput;
+  connect?: AttendeeWhereUniqueInput;
+}
+
+export interface AttendeeUpdateWithoutAnswersDataInput {
+  name?: String;
+  class?: ClassUpdateOneRequiredWithoutAttendeesInput;
+}
+
+export interface ClassUpdateOneRequiredWithoutAttendeesInput {
+  create?: ClassCreateWithoutAttendeesInput;
+  update?: ClassUpdateWithoutAttendeesDataInput;
+  upsert?: ClassUpsertWithoutAttendeesInput;
+  connect?: ClassWhereUniqueInput;
+}
+
+export interface ClassUpdateWithoutAttendeesDataInput {
   name?: String;
   post?: PostUpdateOneRequiredWithoutClassesInput;
   published?: Boolean;
@@ -579,6 +892,7 @@ export interface PostUpdateOneRequiredWithoutClassesInput {
 
 export interface PostUpdateWithoutClassesDataInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title?: String;
   content?: String;
   answerType?: String;
@@ -629,6 +943,83 @@ export interface FieldUpdateWithWhereUniqueWithoutPostInput {
 export interface FieldUpdateWithoutPostDataInput {
   label?: String;
   type?: String;
+  answers?: AnswerUpdateManyWithoutFieldInput;
+}
+
+export interface AnswerUpdateManyWithoutFieldInput {
+  create?: AnswerCreateWithoutFieldInput[] | AnswerCreateWithoutFieldInput;
+  delete?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+  connect?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+  disconnect?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+  update?:
+    | AnswerUpdateWithWhereUniqueWithoutFieldInput[]
+    | AnswerUpdateWithWhereUniqueWithoutFieldInput;
+  upsert?:
+    | AnswerUpsertWithWhereUniqueWithoutFieldInput[]
+    | AnswerUpsertWithWhereUniqueWithoutFieldInput;
+  deleteMany?: AnswerScalarWhereInput[] | AnswerScalarWhereInput;
+  updateMany?:
+    | AnswerUpdateManyWithWhereNestedInput[]
+    | AnswerUpdateManyWithWhereNestedInput;
+}
+
+export interface AnswerUpdateWithWhereUniqueWithoutFieldInput {
+  where: AnswerWhereUniqueInput;
+  data: AnswerUpdateWithoutFieldDataInput;
+}
+
+export interface AnswerUpdateWithoutFieldDataInput {
+  value?: String;
+  author?: AttendeeUpdateOneRequiredWithoutAnswersInput;
+}
+
+export interface AnswerUpsertWithWhereUniqueWithoutFieldInput {
+  where: AnswerWhereUniqueInput;
+  update: AnswerUpdateWithoutFieldDataInput;
+  create: AnswerCreateWithoutFieldInput;
+}
+
+export interface AnswerScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  value?: String;
+  value_not?: String;
+  value_in?: String[] | String;
+  value_not_in?: String[] | String;
+  value_lt?: String;
+  value_lte?: String;
+  value_gt?: String;
+  value_gte?: String;
+  value_contains?: String;
+  value_not_contains?: String;
+  value_starts_with?: String;
+  value_not_starts_with?: String;
+  value_ends_with?: String;
+  value_not_ends_with?: String;
+  AND?: AnswerScalarWhereInput[] | AnswerScalarWhereInput;
+  OR?: AnswerScalarWhereInput[] | AnswerScalarWhereInput;
+  NOT?: AnswerScalarWhereInput[] | AnswerScalarWhereInput;
+}
+
+export interface AnswerUpdateManyWithWhereNestedInput {
+  where: AnswerScalarWhereInput;
+  data: AnswerUpdateManyDataInput;
+}
+
+export interface AnswerUpdateManyDataInput {
+  value?: String;
 }
 
 export interface FieldUpsertWithWhereUniqueWithoutPostInput {
@@ -700,42 +1091,26 @@ export interface PostUpsertWithoutClassesInput {
   create: PostCreateWithoutClassesInput;
 }
 
-export interface ClassUpdateManyMutationInput {
-  name?: String;
-  published?: Boolean;
+export interface ClassUpsertWithoutAttendeesInput {
+  update: ClassUpdateWithoutAttendeesDataInput;
+  create: ClassCreateWithoutAttendeesInput;
 }
 
-export interface FieldCreateInput {
-  label: String;
-  type: String;
-  post: PostCreateOneWithoutFieldsInput;
+export interface AttendeeUpsertWithoutAnswersInput {
+  update: AttendeeUpdateWithoutAnswersDataInput;
+  create: AttendeeCreateWithoutAnswersInput;
 }
 
-export interface PostCreateOneWithoutFieldsInput {
-  create?: PostCreateWithoutFieldsInput;
-  connect?: PostWhereUniqueInput;
+export interface FieldUpdateOneWithoutAnswersInput {
+  create?: FieldCreateWithoutAnswersInput;
+  update?: FieldUpdateWithoutAnswersDataInput;
+  upsert?: FieldUpsertWithoutAnswersInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: FieldWhereUniqueInput;
 }
 
-export interface PostCreateWithoutFieldsInput {
-  published?: Boolean;
-  title: String;
-  content: String;
-  answerType: String;
-  author: UserCreateOneWithoutPostsInput;
-  classes?: ClassCreateManyWithoutPostInput;
-}
-
-export interface ClassCreateManyWithoutPostInput {
-  create?: ClassCreateWithoutPostInput[] | ClassCreateWithoutPostInput;
-  connect?: ClassWhereUniqueInput[] | ClassWhereUniqueInput;
-}
-
-export interface ClassCreateWithoutPostInput {
-  name: String;
-  published?: Boolean;
-}
-
-export interface FieldUpdateInput {
+export interface FieldUpdateWithoutAnswersDataInput {
   label?: String;
   type?: String;
   post?: PostUpdateOneRequiredWithoutFieldsInput;
@@ -750,6 +1125,7 @@ export interface PostUpdateOneRequiredWithoutFieldsInput {
 
 export interface PostUpdateWithoutFieldsDataInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title?: String;
   content?: String;
   answerType?: String;
@@ -782,6 +1158,124 @@ export interface ClassUpdateWithWhereUniqueWithoutPostInput {
 export interface ClassUpdateWithoutPostDataInput {
   name?: String;
   published?: Boolean;
+  attendees?: AttendeeUpdateManyWithoutClassInput;
+}
+
+export interface AttendeeUpdateManyWithoutClassInput {
+  create?: AttendeeCreateWithoutClassInput[] | AttendeeCreateWithoutClassInput;
+  delete?: AttendeeWhereUniqueInput[] | AttendeeWhereUniqueInput;
+  connect?: AttendeeWhereUniqueInput[] | AttendeeWhereUniqueInput;
+  disconnect?: AttendeeWhereUniqueInput[] | AttendeeWhereUniqueInput;
+  update?:
+    | AttendeeUpdateWithWhereUniqueWithoutClassInput[]
+    | AttendeeUpdateWithWhereUniqueWithoutClassInput;
+  upsert?:
+    | AttendeeUpsertWithWhereUniqueWithoutClassInput[]
+    | AttendeeUpsertWithWhereUniqueWithoutClassInput;
+  deleteMany?: AttendeeScalarWhereInput[] | AttendeeScalarWhereInput;
+  updateMany?:
+    | AttendeeUpdateManyWithWhereNestedInput[]
+    | AttendeeUpdateManyWithWhereNestedInput;
+}
+
+export interface AttendeeUpdateWithWhereUniqueWithoutClassInput {
+  where: AttendeeWhereUniqueInput;
+  data: AttendeeUpdateWithoutClassDataInput;
+}
+
+export interface AttendeeUpdateWithoutClassDataInput {
+  name?: String;
+  answers?: AnswerUpdateManyWithoutAuthorInput;
+}
+
+export interface AnswerUpdateManyWithoutAuthorInput {
+  create?: AnswerCreateWithoutAuthorInput[] | AnswerCreateWithoutAuthorInput;
+  delete?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+  connect?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+  disconnect?: AnswerWhereUniqueInput[] | AnswerWhereUniqueInput;
+  update?:
+    | AnswerUpdateWithWhereUniqueWithoutAuthorInput[]
+    | AnswerUpdateWithWhereUniqueWithoutAuthorInput;
+  upsert?:
+    | AnswerUpsertWithWhereUniqueWithoutAuthorInput[]
+    | AnswerUpsertWithWhereUniqueWithoutAuthorInput;
+  deleteMany?: AnswerScalarWhereInput[] | AnswerScalarWhereInput;
+  updateMany?:
+    | AnswerUpdateManyWithWhereNestedInput[]
+    | AnswerUpdateManyWithWhereNestedInput;
+}
+
+export interface AnswerUpdateWithWhereUniqueWithoutAuthorInput {
+  where: AnswerWhereUniqueInput;
+  data: AnswerUpdateWithoutAuthorDataInput;
+}
+
+export interface AnswerUpdateWithoutAuthorDataInput {
+  value?: String;
+  field?: FieldUpdateOneWithoutAnswersInput;
+}
+
+export interface AnswerUpsertWithWhereUniqueWithoutAuthorInput {
+  where: AnswerWhereUniqueInput;
+  update: AnswerUpdateWithoutAuthorDataInput;
+  create: AnswerCreateWithoutAuthorInput;
+}
+
+export interface AttendeeUpsertWithWhereUniqueWithoutClassInput {
+  where: AttendeeWhereUniqueInput;
+  update: AttendeeUpdateWithoutClassDataInput;
+  create: AttendeeCreateWithoutClassInput;
+}
+
+export interface AttendeeScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
+  AND?: AttendeeScalarWhereInput[] | AttendeeScalarWhereInput;
+  OR?: AttendeeScalarWhereInput[] | AttendeeScalarWhereInput;
+  NOT?: AttendeeScalarWhereInput[] | AttendeeScalarWhereInput;
+}
+
+export interface AttendeeUpdateManyWithWhereNestedInput {
+  where: AttendeeScalarWhereInput;
+  data: AttendeeUpdateManyDataInput;
+}
+
+export interface AttendeeUpdateManyDataInput {
+  name?: String;
 }
 
 export interface ClassUpsertWithWhereUniqueWithoutPostInput {
@@ -841,6 +1335,64 @@ export interface PostUpsertWithoutFieldsInput {
   create: PostCreateWithoutFieldsInput;
 }
 
+export interface FieldUpsertWithoutAnswersInput {
+  update: FieldUpdateWithoutAnswersDataInput;
+  create: FieldCreateWithoutAnswersInput;
+}
+
+export interface AnswerUpdateManyMutationInput {
+  value?: String;
+}
+
+export interface AttendeeCreateInput {
+  name?: String;
+  answers?: AnswerCreateManyWithoutAuthorInput;
+  class: ClassCreateOneWithoutAttendeesInput;
+}
+
+export interface AttendeeUpdateInput {
+  name?: String;
+  answers?: AnswerUpdateManyWithoutAuthorInput;
+  class?: ClassUpdateOneRequiredWithoutAttendeesInput;
+}
+
+export interface AttendeeUpdateManyMutationInput {
+  name?: String;
+}
+
+export interface ClassCreateInput {
+  name: String;
+  post: PostCreateOneWithoutClassesInput;
+  published?: Boolean;
+  attendees?: AttendeeCreateManyWithoutClassInput;
+}
+
+export interface ClassUpdateInput {
+  name?: String;
+  post?: PostUpdateOneRequiredWithoutClassesInput;
+  published?: Boolean;
+  attendees?: AttendeeUpdateManyWithoutClassInput;
+}
+
+export interface ClassUpdateManyMutationInput {
+  name?: String;
+  published?: Boolean;
+}
+
+export interface FieldCreateInput {
+  label: String;
+  type: String;
+  post: PostCreateOneWithoutFieldsInput;
+  answers?: AnswerCreateManyWithoutFieldInput;
+}
+
+export interface FieldUpdateInput {
+  label?: String;
+  type?: String;
+  post?: PostUpdateOneRequiredWithoutFieldsInput;
+  answers?: AnswerUpdateManyWithoutFieldInput;
+}
+
 export interface FieldUpdateManyMutationInput {
   label?: String;
   type?: String;
@@ -848,6 +1400,7 @@ export interface FieldUpdateManyMutationInput {
 
 export interface PostCreateInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title: String;
   content: String;
   answerType: String;
@@ -858,6 +1411,7 @@ export interface PostCreateInput {
 
 export interface PostUpdateInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title?: String;
   content?: String;
   answerType?: String;
@@ -868,6 +1422,7 @@ export interface PostUpdateInput {
 
 export interface PostUpdateManyMutationInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title?: String;
   content?: String;
   answerType?: String;
@@ -887,6 +1442,7 @@ export interface PostCreateManyWithoutAuthorInput {
 
 export interface PostCreateWithoutAuthorInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title: String;
   content: String;
   answerType: String;
@@ -925,6 +1481,7 @@ export interface PostUpdateWithWhereUniqueWithoutAuthorInput {
 
 export interface PostUpdateWithoutAuthorDataInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title?: String;
   content?: String;
   answerType?: String;
@@ -971,6 +1528,8 @@ export interface PostScalarWhereInput {
   updatedAt_gte?: DateTimeInput;
   published?: Boolean;
   published_not?: Boolean;
+  anonymous?: Boolean;
+  anonymous_not?: Boolean;
   title?: String;
   title_not?: String;
   title_in?: String[] | String;
@@ -1025,6 +1584,7 @@ export interface PostUpdateManyWithWhereNestedInput {
 
 export interface PostUpdateManyDataInput {
   published?: Boolean;
+  anonymous?: Boolean;
   title?: String;
   content?: String;
   answerType?: String;
@@ -1034,6 +1594,28 @@ export interface UserUpdateManyMutationInput {
   email?: String;
   password?: String;
   name?: String;
+}
+
+export interface AnswerSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: AnswerWhereInput;
+  AND?: AnswerSubscriptionWhereInput[] | AnswerSubscriptionWhereInput;
+  OR?: AnswerSubscriptionWhereInput[] | AnswerSubscriptionWhereInput;
+  NOT?: AnswerSubscriptionWhereInput[] | AnswerSubscriptionWhereInput;
+}
+
+export interface AttendeeSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: AttendeeWhereInput;
+  AND?: AttendeeSubscriptionWhereInput[] | AttendeeSubscriptionWhereInput;
+  OR?: AttendeeSubscriptionWhereInput[] | AttendeeSubscriptionWhereInput;
+  NOT?: AttendeeSubscriptionWhereInput[] | AttendeeSubscriptionWhereInput;
 }
 
 export interface ClassSubscriptionWhereInput {
@@ -1084,6 +1666,67 @@ export interface NodeNode {
   id: ID_Output;
 }
 
+export interface Answer {
+  id: ID_Output;
+  value: String;
+}
+
+export interface AnswerPromise extends Promise<Answer>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  value: () => Promise<String>;
+  author: <T = AttendeePromise>() => T;
+  field: <T = FieldPromise>() => T;
+}
+
+export interface AnswerSubscription
+  extends Promise<AsyncIterator<Answer>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  value: () => Promise<AsyncIterator<String>>;
+  author: <T = AttendeeSubscription>() => T;
+  field: <T = FieldSubscription>() => T;
+}
+
+export interface Attendee {
+  id: ID_Output;
+  name: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface AttendeePromise extends Promise<Attendee>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  answers: <T = FragmentableArray<Answer>>(args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  class: <T = ClassPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AttendeeSubscription
+  extends Promise<AsyncIterator<Attendee>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  answers: <T = Promise<AsyncIterator<AnswerSubscription>>>(args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  class: <T = ClassSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface Class {
   id: ID_Output;
   name: String;
@@ -1095,6 +1738,15 @@ export interface ClassPromise extends Promise<Class>, Fragmentable {
   name: () => Promise<String>;
   post: <T = PostPromise>() => T;
   published: () => Promise<Boolean>;
+  attendees: <T = FragmentableArray<Attendee>>(args?: {
+    where?: AttendeeWhereInput;
+    orderBy?: AttendeeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface ClassSubscription
@@ -1104,6 +1756,15 @@ export interface ClassSubscription
   name: () => Promise<AsyncIterator<String>>;
   post: <T = PostSubscription>() => T;
   published: () => Promise<AsyncIterator<Boolean>>;
+  attendees: <T = Promise<AsyncIterator<AttendeeSubscription>>>(args?: {
+    where?: AttendeeWhereInput;
+    orderBy?: AttendeeOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface Post {
@@ -1111,6 +1772,7 @@ export interface Post {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   published: Boolean;
+  anonymous: Boolean;
   title: String;
   content: String;
   answerType: String;
@@ -1121,6 +1783,7 @@ export interface PostPromise extends Promise<Post>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   published: () => Promise<Boolean>;
+  anonymous: () => Promise<Boolean>;
   title: () => Promise<String>;
   content: () => Promise<String>;
   answerType: () => Promise<String>;
@@ -1152,6 +1815,7 @@ export interface PostSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   published: () => Promise<AsyncIterator<Boolean>>;
+  anonymous: () => Promise<AsyncIterator<Boolean>>;
   title: () => Promise<AsyncIterator<String>>;
   content: () => Promise<AsyncIterator<String>>;
   answerType: () => Promise<AsyncIterator<String>>;
@@ -1228,6 +1892,15 @@ export interface FieldPromise extends Promise<Field>, Fragmentable {
   label: () => Promise<String>;
   type: () => Promise<String>;
   post: <T = PostPromise>() => T;
+  answers: <T = FragmentableArray<Answer>>(args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface FieldSubscription
@@ -1237,24 +1910,33 @@ export interface FieldSubscription
   label: () => Promise<AsyncIterator<String>>;
   type: () => Promise<AsyncIterator<String>>;
   post: <T = PostSubscription>() => T;
+  answers: <T = Promise<AsyncIterator<AnswerSubscription>>>(args?: {
+    where?: AnswerWhereInput;
+    orderBy?: AnswerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface ClassConnection {}
+export interface AnswerConnection {}
 
-export interface ClassConnectionPromise
-  extends Promise<ClassConnection>,
+export interface AnswerConnectionPromise
+  extends Promise<AnswerConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ClassEdge>>() => T;
-  aggregate: <T = AggregateClassPromise>() => T;
+  edges: <T = FragmentableArray<AnswerEdge>>() => T;
+  aggregate: <T = AggregateAnswerPromise>() => T;
 }
 
-export interface ClassConnectionSubscription
-  extends Promise<AsyncIterator<ClassConnection>>,
+export interface AnswerConnectionSubscription
+  extends Promise<AsyncIterator<AnswerConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ClassEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateClassSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AnswerEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAnswerSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -1278,6 +1960,108 @@ export interface PageInfoSubscription
   hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
   startCursor: () => Promise<AsyncIterator<String>>;
   endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AnswerEdge {
+  cursor: String;
+}
+
+export interface AnswerEdgePromise extends Promise<AnswerEdge>, Fragmentable {
+  node: <T = AnswerPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AnswerEdgeSubscription
+  extends Promise<AsyncIterator<AnswerEdge>>,
+    Fragmentable {
+  node: <T = AnswerSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAnswer {
+  count: Int;
+}
+
+export interface AggregateAnswerPromise
+  extends Promise<AggregateAnswer>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAnswerSubscription
+  extends Promise<AsyncIterator<AggregateAnswer>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AttendeeConnection {}
+
+export interface AttendeeConnectionPromise
+  extends Promise<AttendeeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AttendeeEdge>>() => T;
+  aggregate: <T = AggregateAttendeePromise>() => T;
+}
+
+export interface AttendeeConnectionSubscription
+  extends Promise<AsyncIterator<AttendeeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AttendeeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAttendeeSubscription>() => T;
+}
+
+export interface AttendeeEdge {
+  cursor: String;
+}
+
+export interface AttendeeEdgePromise
+  extends Promise<AttendeeEdge>,
+    Fragmentable {
+  node: <T = AttendeePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AttendeeEdgeSubscription
+  extends Promise<AsyncIterator<AttendeeEdge>>,
+    Fragmentable {
+  node: <T = AttendeeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAttendee {
+  count: Int;
+}
+
+export interface AggregateAttendeePromise
+  extends Promise<AggregateAttendee>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAttendeeSubscription
+  extends Promise<AsyncIterator<AggregateAttendee>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ClassConnection {}
+
+export interface ClassConnectionPromise
+  extends Promise<ClassConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ClassEdge>>() => T;
+  aggregate: <T = AggregateClassPromise>() => T;
+}
+
+export interface ClassConnectionSubscription
+  extends Promise<AsyncIterator<ClassConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ClassEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateClassSubscription>() => T;
 }
 
 export interface ClassEdge {
@@ -1478,6 +2262,93 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
+export interface AnswerSubscriptionPayload {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface AnswerSubscriptionPayloadPromise
+  extends Promise<AnswerSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AnswerPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AnswerPreviousValuesPromise>() => T;
+}
+
+export interface AnswerSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AnswerSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AnswerSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AnswerPreviousValuesSubscription>() => T;
+}
+
+export interface AnswerPreviousValues {
+  id: ID_Output;
+  value: String;
+}
+
+export interface AnswerPreviousValuesPromise
+  extends Promise<AnswerPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  value: () => Promise<String>;
+}
+
+export interface AnswerPreviousValuesSubscription
+  extends Promise<AsyncIterator<AnswerPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  value: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AttendeeSubscriptionPayload {
+  mutation: MutationType;
+  updatedFields?: String[];
+}
+
+export interface AttendeeSubscriptionPayloadPromise
+  extends Promise<AttendeeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AttendeePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AttendeePreviousValuesPromise>() => T;
+}
+
+export interface AttendeeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AttendeeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AttendeeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AttendeePreviousValuesSubscription>() => T;
+}
+
+export interface AttendeePreviousValues {
+  id: ID_Output;
+  name: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface AttendeePreviousValuesPromise
+  extends Promise<AttendeePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface AttendeePreviousValuesSubscription
+  extends Promise<AsyncIterator<AttendeePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface ClassSubscriptionPayload {
   mutation: MutationType;
   updatedFields?: String[];
@@ -1596,6 +2467,7 @@ export interface PostPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   published: Boolean;
+  anonymous: Boolean;
   title: String;
   content: String;
   answerType: String;
@@ -1608,6 +2480,7 @@ export interface PostPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   published: () => Promise<Boolean>;
+  anonymous: () => Promise<Boolean>;
   title: () => Promise<String>;
   content: () => Promise<String>;
   answerType: () => Promise<String>;
@@ -1620,6 +2493,7 @@ export interface PostPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   published: () => Promise<AsyncIterator<Boolean>>;
+  anonymous: () => Promise<AsyncIterator<Boolean>>;
   title: () => Promise<AsyncIterator<String>>;
   content: () => Promise<AsyncIterator<String>>;
   answerType: () => Promise<AsyncIterator<String>>;
@@ -1711,6 +2585,14 @@ export type Long = string;
  */
 
 export const models = [
+  {
+    name: "Answer",
+    embedded: false
+  },
+  {
+    name: "Attendee",
+    embedded: false
+  },
   {
     name: "Class",
     embedded: false

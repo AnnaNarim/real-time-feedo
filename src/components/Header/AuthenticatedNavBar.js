@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import {BLOG, CREATE_NEW_POST, DRAFTS} from "../../constant";
 import {makeStyles} from '@material-ui/core/styles';
+import {CREATE_NEW_POST, ROOMS, ROOM} from "../../constant";
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,28 +11,26 @@ import {signOut} from "../../lib/jsUtils";
 
 
 const useStyles = makeStyles((theme) => ({
-    root  : {
-        width           : '100%',
-        maxWidth        : 360,
-        backgroundColor : theme.palette.background.paper,
-    },
-    paper : {
-        width     : '80%',
-        maxHeight : 435,
-    },
+    text: {
+        color: 'white'
+    }
 }));
 
 
 const AuthenticatedNavBar = () => {
+    const classes = useStyles();
     const [showLogoutDialog, setShowLogOutDialog] = useState(false);
     return <div>
-        <Button component={Link} to={CREATE_NEW_POST}>
-            Create New Post
+        <Button component={Link} to={ROOM} className={classes.text}>
+            Enter Room
         </Button>
-        <Button component={Link} to={DRAFTS}>
-            Drafts
+        <Button component={Link} to={CREATE_NEW_POST} className={classes.text}>
+            Create Room
         </Button>
-        <Button onClick={() => setShowLogOutDialog(true)}>
+        <Button component={Link} to={ROOMS} className={classes.text}>
+            Rooms
+        </Button>
+        <Button onClick={() => setShowLogOutDialog(true)} className={classes.text}>
             Log Out
         </Button>
         {showLogoutDialog ? <LogOutDialog/> : null}
@@ -50,7 +48,6 @@ const LogOutDialog = () => {
         setOpen(false);
         signOut();
         window.location.href = '/'
-        //TODO :implement right log out logic
     };
 
     return (
@@ -62,7 +59,7 @@ const LogOutDialog = () => {
         >
             <DialogTitle id="confirmation-dialog-title">Log Out Confirmation</DialogTitle>
             <DialogContent dividers>
-                Are you sure you want to logout? &#128561;
+                Are you sure you want to logout? <span aria-label='sad' role='img'> &#128561;</span>
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={handleCancel} color="default">

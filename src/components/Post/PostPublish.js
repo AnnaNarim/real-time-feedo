@@ -14,7 +14,7 @@ const PUBLISH_MUTATION = gql`
             published
         }
     }
-`
+`;
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,6 @@ const PublishPost = ({isPublished, id, refresh}) => {
                 <GreenSwitch
                     checked={isPublished}
                     onChange={() => {
-                        debugger
                         publish({variables : {id, published : !isPublished}}).then(() => {
                             refresh()
                         })

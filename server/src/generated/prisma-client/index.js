@@ -5,6 +5,14 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
+    name: "Answer",
+    embedded: false
+  },
+  {
+    name: "Attendee",
+    embedded: false
+  },
+  {
     name: "Class",
     embedded: false
   },
@@ -28,6 +36,14 @@ exports.Prisma = prisma_lib_1.makePrismaClientClass({
 });
 exports.prisma = new exports.Prisma();
 var models = [
+  {
+    name: "Answer",
+    embedded: false
+  },
+  {
+    name: "Attendee",
+    embedded: false
+  },
   {
     name: "Class",
     embedded: false
