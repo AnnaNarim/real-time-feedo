@@ -30,6 +30,7 @@ npm install -g graphql-cli
 * `node server.js` starts server on `http://localhost:8000` and displays the production build
 
 <br />
+
 ## Server Documentation
 
 ### Commands
