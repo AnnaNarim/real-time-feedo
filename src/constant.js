@@ -1,12 +1,12 @@
 export const USER_ID = 'user-id';
-export const DOMAIN ="https://placholder/";
+export const DOMAIN ="http://localhost:3000/";
 export const LANDING = '/';
 export const AUTH_TOKEN = 'AUTH_TOKEN';
 export const SIGN_UP = '/signup';
 export const SIGN_IN = '/login';
 export const ROOMS = '/rooms';
 export const BLOG = '/blog';
-export const CREATE_NEW_POST="/create-post";
+export const CREATE_NEW_POST="/create-room";
 export const ROOM = '/room';
 export const SINGLE_ROOM = '/room/:id';
 

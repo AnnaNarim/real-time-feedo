@@ -72,7 +72,8 @@ const DeletePostConfirmDialog = ({title, onConfirm, onClose}) => {
         >
             <DialogTitle id="confirmation-dialog-title">Delete Room confirmation</DialogTitle>
             <DialogContent dividers>
-                Are you sure you want delete {title} post? &#128561;
+                Are you sure you want delete <i>{title}</i> room?
+                All the related content will be deleted. &#128561;
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={handleCancel} color="default">

@@ -112,7 +112,7 @@ const SinglePostView = (props) => {
                 <CircularProgress color="inherit"/>
             </Backdrop>
 
-            <Typography variant='h3' align='center'>Class {name}</Typography>
+            <Typography variant='h3' align='center' style={{ marginBottom: 50 }}>Class {name}</Typography>
             <Typography variant='h4' align='left'>{title}</Typography>
             <Typography variant='h6' align='left'> {content}</Typography>
 
@@ -168,17 +168,17 @@ const SinglePostView = (props) => {
                                     defaultValue={''}
                                 >
                                     <MenuItem value=""><em>None</em></MenuItem>
-                                    <MenuItem value={"0"}>Zero</MenuItem>
-                                    <MenuItem value={"10"}>Ten</MenuItem>
-                                    <MenuItem value={"20"}>Twenty</MenuItem>
-                                    <MenuItem value={"30"}>Thirty</MenuItem>
-                                    <MenuItem value={"40"}>Forty</MenuItem>
-                                    <MenuItem value={"50"}>Fifty</MenuItem>
-                                    <MenuItem value={"60"}>Sixty</MenuItem>
-                                    <MenuItem value={"70"}>Seventy</MenuItem>
-                                    <MenuItem value={"80"}>Eighty</MenuItem>
-                                    <MenuItem value={"90"}>Ninety</MenuItem>
-                                    <MenuItem value={"100"}>Hundred</MenuItem>
+                                    <MenuItem value={"0"}>0%</MenuItem>
+                                    <MenuItem value={"10"}>10%</MenuItem>
+                                    <MenuItem value={"20"}>20%</MenuItem>
+                                    <MenuItem value={"30"}>30%</MenuItem>
+                                    <MenuItem value={"40"}>40%</MenuItem>
+                                    <MenuItem value={"50"}>50%</MenuItem>
+                                    <MenuItem value={"60"}>60%</MenuItem>
+                                    <MenuItem value={"70"}>70%</MenuItem>
+                                    <MenuItem value={"80"}>80%</MenuItem>
+                                    <MenuItem value={"90"}>90%</MenuItem>
+                                    <MenuItem value={"100"}>100%</MenuItem>
                                 </Controller>
                                 : "Cant find current type input"
                     ))}

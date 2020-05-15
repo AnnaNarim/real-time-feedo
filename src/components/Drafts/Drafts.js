@@ -56,7 +56,7 @@ const DraftsPage = (props) => {
                 <CircularProgress color="inherit"/>
             </Backdrop>
             <Container>
-                <h1>Drafts</h1>
+                <h1>My Rooms</h1>
                 <GridList cellHeight={"auto"} cols={2} spacing={10}>
                     {drafts.map((draft) => (
                         <GridListTile key={draft.id}>

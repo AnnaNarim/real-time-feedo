@@ -16,11 +16,8 @@ const NonAuthenticatedNavBar = () => {
         <Button component={Link} to={ROOM} className={classes.text}>
             Enter Room
         </Button>
-        <Button component={Link} to={BLOG} className={classes.text}>
-            Blog
-        </Button>
         <Button component={Link} to={SIGN_IN} className={classes.text}>
-            Login
+            Log in
         </Button>
         <Button component={Link} to={SIGN_UP} className={classes.text}>
             Sign Up

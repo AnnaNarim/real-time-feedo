@@ -54,6 +54,7 @@ const LogOutDialog = () => {
         <Dialog
             disableBackdropClick
             disableEscapeKeyDown
+            fullWidth
             maxWidth="xs"
             open={open}
         >

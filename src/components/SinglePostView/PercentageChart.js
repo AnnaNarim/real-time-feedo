@@ -77,7 +77,7 @@ const getChartsData = (fields, submittedFormsCount) => {
 
         return {
             key   : field.id,
-            title : field.label.length > 10 ? field.label.slice(0, 10) + '...' : field.label,
+            title : field.label.length > 20 ? field.label.slice(0, 20) + '...' : field.label,
             data  : processData(field.relativeClassAnswers, submittedFormsCount),
             avg   : computeAvg(field.relativeClassAnswers),
             color : getRandomColor()
